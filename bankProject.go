@@ -4,13 +4,11 @@ import (
   "encoding/xml"
   "fmt"
   "io/ioutil"
-  //"database/sql"
-  //"github.com/go-sql-driver/mysql"
-  //"strings"
+  "strings"
 )
 
 type clientCredentials struct{
-  ClientUni []string `xml:"client>uniNumber"`
+  ClientUni []int `xml:"client>uniNumber"`
   ClientName []string `xml:"client>name"`
   ClientSurname []string `xml:"client>surname"`
   ClientBirth []string `xml:"client>dateOfBirth"`
@@ -21,15 +19,16 @@ type clientCredentials struct{
   CardID []string  `xml:"client>cards>card>cardNumber"`
   CardExpDate []string `xml:"client>cards>card>expirationDate"`
   CardCurrency []string `xml:"client>cards>card>cardCurrency"`
-  CardBalance []string `xml:"client>cards>card>cardBalance"`
+  CardBalance []float64 `xml:"client>cards>card>cardBalance"`
 
   AccountCurrency []string `xml:"client>accounts>account>accountCurrency"`
-  AccountBalance []string `xml:"client>accounts>account>accountBalance"`
+  AccountBalance []float64 `xml:"client>accounts>account>accountBalance"`
 
 }
 
 type clientMap struct{
-  IndNum string
+  IndNum int
+  FullName string
   BirthDate string
   Address string
   Phone string
@@ -37,17 +36,17 @@ type clientMap struct{
 }
 
 type cardMap struct{
-  IndNum string
+  IndNum int
   ID string
   ExpDate string
   Currency string
-  Balance string
+  Balance float64
 }
 
 type accountMap struct{
-  IndNum string
+  IndNum int
   Currency string
-  Balance string
+  Balance float64
 }
 
 func main(){
@@ -67,8 +66,8 @@ func main(){
     clientUni := XMLdata.ClientUni[idx]
 
     for idx, _  := range XMLdata.ClientName{
-      //clientMapIdx := strings.Join([]string{XMLdata.ClientName[idx], XMLdata.ClientSurname[idx]} , " ")
-      clientInfo[idx] = clientMap{clientUni, XMLdata.ClientBirth[idx], XMLdata.ClientAddress[idx], XMLdata.ClientPhone[idx], XMLdata.ClientPassport[idx]}
+      clientFullName := strings.Join([]string{XMLdata.ClientName[idx], XMLdata.ClientSurname[idx]} , " ")
+      clientInfo[idx] = clientMap{clientUni, clientFullName, XMLdata.ClientBirth[idx], XMLdata.ClientAddress[idx], XMLdata.ClientPhone[idx], XMLdata.ClientPassport[idx]}
     }
 
     for idx, _ := range XMLdata.CardID{
@@ -84,7 +83,7 @@ func main(){
 
   fmt.Println("clientMap:")
   for idx, data := range clientInfo{
-    fmt.Println(idx,":", data.IndNum, data.BirthDate, data.Address, data.Phone, data.Passport)
+    fmt.Println(idx,":", data.IndNum, data.FullName, data.BirthDate, data.Address, data.Phone, data.Passport)
   }
   fmt.Println()
 
@@ -99,4 +98,8 @@ func main(){
     fmt.Println(idx,":", data.IndNum, data.Currency, data.Balance)
   }
   fmt.Println()
+
+  dbClientWriter(clientInfo)
+  dbCardWriter(cardInfo)
+  dbAccountWriter(accountInfo)
 }
