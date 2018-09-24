@@ -36,7 +36,7 @@ func insertClientsData(datamap map[int]clientMap){
   stmt, err := db.Prepare("INSERT INTO clientsBio VALUES(?, ?, ?, ?, ?, ?);")
   checkErr(err)
   for _, data := range datamap{
-  _, err := stmt.Exec(int(data.IndNum), string(data.FullName), string(data.BirthDate), string(data.Address), string(data.Phone), string(data.Passport))
+  _, err = stmt.Exec(int(data.IndNum), string(data.FullName), string(data.BirthDate), string(data.Address), string(data.Phone), string(data.Passport))
     checkErr(err)
   }
 }

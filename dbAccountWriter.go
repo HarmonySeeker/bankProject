@@ -29,7 +29,7 @@ func insertAccountData(datamap map[int]accountMap){
   stmt, err := db.Prepare("INSERT INTO clientsAccount VALUES(?, ?, ?);")
   checkErr(err)
   for _, data := range datamap{
-  _, err := stmt.Exec(int(data.IndNum), string(data.Currency), float64(data.Balance))
+  _, err = stmt.Exec(int(data.IndNum), string(data.Currency), float64(data.Balance))
     checkErr(err)
   }
 }
