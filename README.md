@@ -10,6 +10,7 @@ Right after the start of the main() function you will see "settings blog" with t
 
 ----------------------
 Database creation
+
 This application requires mysql database support, which can be downloaded here: https://dev.mysql.com/downloads/installer/
 
 Once you have installed it, picked a user and chosen a port to start a mysql server, log into your account and create database named"bankProject". OR you can name it how you want, but be sure to change the name of database in the "ConnectionDB" string which is located in the bankProject.go file.
