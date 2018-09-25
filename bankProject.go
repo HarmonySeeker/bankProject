@@ -5,6 +5,7 @@ import (
   "fmt"
   "io/ioutil"
   "strings"
+  _ "github.com/go-sql-driver/mysql"
 )
 
 type clientCredentials struct{
@@ -49,7 +50,20 @@ type accountMap struct{
   Balance float64
 }
 
+var ConnectionDB string
+var settings string
+
 func main(){
+  //settings blog; check README for more info
+  ConnectionDB = "Wanderer:Art.156.DBW.426@tcp(127.0.0.1:3306)/bankProject"
+  settings = "Import"
+//  UniqueClient := 77602
+  //end of settings blog
+
+  clientInfo := make(map[int]clientMap)
+  cardInfo := make(map[int]cardMap)
+  accountInfo := make(map[int]accountMap)
+
   var XMLdata clientCredentials
 
   fmt.Println("\nStarted:\n")
@@ -57,10 +71,6 @@ func main(){
 
   XMLinput, _ := ioutil.ReadFile("bankCredentials.xml")
   xml.Unmarshal(XMLinput, &XMLdata)
-
-  clientInfo := make(map[int]clientMap)
-  cardInfo := make(map[int]cardMap)
-  accountInfo := make(map[int]accountMap)
 
   for idx, _ := range XMLdata.ClientName{
     clientUni := XMLdata.ClientUni[idx]
@@ -71,16 +81,14 @@ func main(){
     }
 
     for idx, _ := range XMLdata.CardID{
-      //cardMapIdx := strings.Join([]string{XMLdata.ClientName[idx], XMLdata.ClientSurname[idx]} , " ")
       cardInfo[idx] = cardMap{clientUni, XMLdata.CardID[idx], XMLdata.CardExpDate[idx], XMLdata.CardCurrency[idx], XMLdata.CardBalance[idx]}
     }
 
     for idx, _ := range XMLdata.CardID{
-      //accountMapIdx := strings.Join([]string{XMLdata.ClientName[idx], XMLdata.ClientSurname[idx]} , " ")
       accountInfo[idx] = accountMap{clientUni, XMLdata.AccountCurrency[idx], XMLdata.AccountBalance[idx]}
     }
   }
-
+  /*
   fmt.Println("clientMap:")
   for idx, data := range clientInfo{
     fmt.Println(idx,":", data.IndNum, data.FullName, data.BirthDate, data.Address, data.Phone, data.Passport)
@@ -97,9 +105,13 @@ func main(){
   for idx, data := range accountInfo {
     fmt.Println(idx,":", data.IndNum, data.Currency, data.Balance)
   }
-  fmt.Println()
+  fmt.Println()*/
+
+  //Commented code above can help in debugging
 
   dbClientWriter(clientInfo)
   dbCardWriter(cardInfo)
   dbAccountWriter(accountInfo)
+
+  fmt.Println("Imported!")
 }
