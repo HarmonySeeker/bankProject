@@ -55,9 +55,9 @@ var settings string
 
 func main(){
   //settings blog; check README for more info
-  ConnectionDB = "Wanderer:Art.156.DBW.426@tcp(127.0.0.1:3306)/bankProject"
+  ConnectionDB = "user:passwd@tcp(127.0.0.1:3306)/bankProject" //change it for your data
   settings = "Import"
-//  UniqueClient := 77602
+  //UniqueClient := 77602
   //end of settings blog
 
   clientInfo := make(map[int]clientMap)
