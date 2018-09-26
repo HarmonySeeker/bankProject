@@ -7,8 +7,8 @@ import (
   "strings"
   "database/sql"
   _ "github.com/go-sql-driver/mysql"
-//  "os"
-//  "io"
+  "os"
+  "io"
 )
 
 type clientCredentials struct{
@@ -137,8 +137,8 @@ func RetrieveAccount(dt map[int]accountMap, db *sql.DB, Uni int)map[int]accountM
 func main(){
   //settings blog; check README for more info
   ConnectionDB = "Wanderer:Art.156.DBW.426@tcp(127.0.0.1:3306)/bankProject"
-  settings = "Import"
-//  UniqueClient := 77602
+  settings = "Retrieve"
+  UniqueClient := 77602
   //end of settings blog
 
   clientInfo := make(map[int]clientMap)
@@ -211,8 +211,7 @@ func main(){
       XMLOutput.Client = append(XMLOutput.Client, clientToXML{IndNum: int(data.IndNum), Name: Name[0], Surname: Name[1], BirthDate: string(data.BirthDate), Address: string(data.Address), Phone: string(data.Phone), Passport: string(data.Passport)})
       }
 
-      cardCollection:= []cardMap{}
-      for idx, data := range cardInfo{
+      for _, data := range cardInfo{
       //cardCollection[idx] = {data.ID, data.ExpDate, data.Currency, data.Balance}
       XMLOutput.Client = append(XMLOutput.Client, clientToXML{CardID: string(data.ID), CardExpDate: string(data.ExpDate), CardCurrency: string(data.Currency), CardBalance: float64(data.Balance)})
       }
@@ -232,5 +231,5 @@ func main(){
                  checkErr(err)
          }
 
-  */} else {fmt.Println("Error: Wrong settings parameter")}
+  } else {fmt.Println("Error: Wrong settings parameter")}
 }
