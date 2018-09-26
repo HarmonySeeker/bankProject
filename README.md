@@ -22,4 +22,6 @@ WARNING: all .go files in the repository are one package, so they are needed to 
 When the database is created, and the name of your database is similar to the name of database written in "ConnectionDB", all drivers are installed, you can start the script with the command which was mentiond earlier. 
 
 The script will automatically connect to the database you have mentioned in the "ConnectionDB" string and check the tables which are need for its work. It will create all missing tables and fill them with data from "bankCredentials.xml"
- 
+
+-------------
+Added bankProjectNOTREADY.go which demonstrates what I was working on with exporting data from database to XML, but it works not how it's must working. I am trying to fix it right now. 
