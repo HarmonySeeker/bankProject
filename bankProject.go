@@ -149,7 +149,7 @@ func RetrieveAccount(dt map[int]accountMap, db *sql.DB, Uni int)map[int]accountM
 
 func main(){
   //settings blog; check README for more info
-  ConnectionDB = "Wanderer:Art.156.DBW.426@tcp(127.0.0.1:3306)/bankProject"
+  ConnectionDB = "user:password@tcp(127.0.0.1:3306)/bankProject"
   settings = "Retrieve"
   UniqueClient := 77602
   //end of settings blog
