@@ -211,10 +211,13 @@ func main(){
     fmt.Println("Imported!")
   } else if settings == "Retrieve"{
       XMLOutput := clientToXML{}
+      fmt.Println("Connecting to database...")
       db, err := sql.Open("mysql", ConnectionDB)
       checkErr(err)
       defer db.Close()
 
+      fmt.Println("Connected!")
+      fmt.Println("Retrieving data from database...")
       RetrieveClient(clientInfo, db, UniqueClient)
       RetrieveCard(cardInfo, db, UniqueClient)
       RetrieveAccount(accountInfo, db, UniqueClient)
@@ -241,6 +244,7 @@ func main(){
       if err := enc.Encode(XMLOutput); err != nil {
                  checkErr(err)
          }
+      fmt.Println("Data has been successfully retrieved and saved to 'bankCredentialsOUT.xml'.")
 
   } else {fmt.Println("Error: Wrong settings parameter")}
 }
